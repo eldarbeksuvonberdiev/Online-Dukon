@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -448,5 +448,4 @@
     <script src="assets/js/frontend-plugin.js"></script>
 </body>
 
-</html> -->
-html
+</html>
