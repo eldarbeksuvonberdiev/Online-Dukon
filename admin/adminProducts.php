@@ -145,18 +145,18 @@ $products = $result->fetchAll(PDO::FETCH_ASSOC);
                     <hr>
                 </div>
                 <div class="container">
-                <div class="row">
-                    <?php
-                    if (isset($_SESSION['alert']) && isset($_SESSION['text'])) { ?>
-                        <div class="alert alert-<?= $_SESSION['alert'] ?> alert-dismissible fade show" role="alert">
-                            <strong><?= $_SESSION['text'] ?></strong>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    <?php
-                        unset($_SESSION['alert']);
-                        unset($_SESSION['text']);
-                    } ?>
-                </div>
+                    <div class="row">
+                        <?php
+                        if (isset($_SESSION['alert']) && isset($_SESSION['text'])) { ?>
+                            <div class="alert alert-<?= $_SESSION['alert'] ?> alert-dismissible fade show" role="alert">
+                                <strong><?= $_SESSION['text'] ?></strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        <?php
+                            unset($_SESSION['alert']);
+                            unset($_SESSION['text']);
+                        } ?>
+                    </div>
                 </div>
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-success ml-4" data-bs-toggle="modal" data-bs-target="#AddproductModal">

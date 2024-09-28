@@ -145,18 +145,18 @@ $products = $result->fetchAll(PDO::FETCH_ASSOC);
                     <hr>
                 </div>
                 <div class="container">
-                <div class="row">
-                    <?php
-                    if (isset($_SESSION['alert']) && isset($_SESSION['text'])) { ?>
-                        <div class="alert alert-<?= $_SESSION['alert'] ?> alert-dismissible fade show" role="alert">
-                            <strong><?= $_SESSION['text'] ?></strong>
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    <?php
-                        unset($_SESSION['alert']);
-                        unset($_SESSION['text']);
-                    } ?>
-                </div>
+                    <div class="row">
+                        <?php
+                        if (isset($_SESSION['alert']) && isset($_SESSION['text'])) { ?>
+                            <div class="alert alert-<?= $_SESSION['alert'] ?> alert-dismissible fade show" role="alert">
+                                <strong><?= $_SESSION['text'] ?></strong>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        <?php
+                            unset($_SESSION['alert']);
+                            unset($_SESSION['text']);
+                        } ?>
+                    </div>
                 </div>
                 <!-- Button trigger modal -->
                 <!-- <button type="button" class="btn btn-success ml-4" data-bs-toggle="modal" data-bs-target="#AddproductModal">
@@ -324,77 +324,78 @@ $products = $result->fetchAll(PDO::FETCH_ASSOC);
 
                                             <!--Button edit trigger Modal -->
                                             <?php
- //                                           if ($_SESSION['id'] == $product['user_id']) { ?>
-                                                <!-- <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal<?= $product['id'] ?>">
+                                            //                                           if ($_SESSION['id'] == $product['user_id']) { 
+                                            ?>
+                                            <!-- <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal<?= $product['id'] ?>">
                                                     <i class="bi bi-pencil-fill"></i>
                                                 </button> -->
 
-                                                <!-- Edit Modal -->
-                                                <div class="modal fade" id="editModal<?= $product['id'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <form action="editProduct.php" method="POST">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h1 class="modal-title fs-5" id="staticBackdropLabel" style="font-weight: 700;">Edit</h1>
-                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            <!-- Edit Modal -->
+                                            <div class="modal fade" id="editModal<?= $product['id'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <form action="editProduct.php" method="POST">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h1 class="modal-title fs-5" id="staticBackdropLabel" style="font-weight: 700;">Edit</h1>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="mb-3">
+                                                                    <input type="hidden" name="id" value="<?= $product['id'] ?>">
+                                                                    <label for="editname" class="form-label">
+                                                                        <h6>Name</h6>
+                                                                    </label>
+                                                                    <input type="text" class="form-control" id="editname" name="editname" value="<?= $product['name'] ?>">
                                                                 </div>
-                                                                <div class="modal-body">
-                                                                    <div class="mb-3">
-                                                                        <input type="hidden" name="id" value="<?= $product['id'] ?>">
-                                                                        <label for="editname" class="form-label">
-                                                                            <h6>Name</h6>
-                                                                        </label>
-                                                                        <input type="text" class="form-control" id="editname" name="editname" value="<?= $product['name'] ?>">
-                                                                    </div>
-                                                                    <div class="mb-3">
-                                                                        <label for="editorder" class="form-label">
-                                                                            <h6>Price</h6>
-                                                                        </label>
-                                                                        <input type="text" class="form-control" id="editorder" name="edittr" value="<?= $product['price'] ?>">
-                                                                    </div>
-                                                                    <div class="mb-3">
-                                                                        <label for="editorder" class="form-label">
-                                                                            <h6>Image</h6>
-                                                                        </label>
-                                                                        <input type="file" class="form-control" id="editorder" name="edittr">
-                                                                        <img src="<?= $product['img'] ?>" alt="" style="width: 150px;">
-                                                                    </div>
-                                                                    <div class="mb-3">
-                                                                        <label for="editorder" class="form-label">
-                                                                            <h6>Count</h6>
-                                                                        </label>
-                                                                        <input type="text" class="form-control" id="editorder" name="edittr" value="<?= $product['count'] ?>">
-                                                                    </div>
-                                                                    <div class="mb-3">
-                                                                        <label for="editorder" class="form-label">
-                                                                            <h6>Premium or not</h6>
-                                                                        </label>
-                                                                        <select class="form-select" name="editstatus" aria-label="Default select example">
-                                                                            <option <?= $product['premium'] == "1" ? "selected" : "" ?>>premium</option>
-                                                                            <option <?= $product['premium'] == "0" ? "selected" : "" ?>>not premium</option>
-                                                                        </select>
-                                                                    </div>
-                                                                    <div class="mb-3">
-                                                                        <label for="editorder" class="form-label">
-                                                                            <h6>Category</h6>
-                                                                        </label>
-                                                                        <input type="text" class="form-control" id="editorder" name="edittr" value="<?= $product['category'] ?>">
-                                                                    </div>
-                                                                    <div class="mb-3">
-                                                                        <label for="editorder" class="form-label">
-                                                                            <h6>Created user</h6>
-                                                                        </label>
-                                                                        <input type="text" class="form-control" id="editorder" name="edittr" value="<?= $product['user'] ?>">
-                                                                    </div>
+                                                                <div class="mb-3">
+                                                                    <label for="editorder" class="form-label">
+                                                                        <h6>Price</h6>
+                                                                    </label>
+                                                                    <input type="text" class="form-control" id="editorder" name="edittr" value="<?= $product['price'] ?>">
                                                                 </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                    <button type="submit" name="edit" class="btn btn-success">Change</button>
+                                                                <div class="mb-3">
+                                                                    <label for="editorder" class="form-label">
+                                                                        <h6>Image</h6>
+                                                                    </label>
+                                                                    <input type="file" class="form-control" id="editorder" name="edittr">
+                                                                    <img src="<?= $product['img'] ?>" alt="" style="width: 150px;">
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="editorder" class="form-label">
+                                                                        <h6>Count</h6>
+                                                                    </label>
+                                                                    <input type="text" class="form-control" id="editorder" name="edittr" value="<?= $product['count'] ?>">
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="editorder" class="form-label">
+                                                                        <h6>Premium or not</h6>
+                                                                    </label>
+                                                                    <select class="form-select" name="editstatus" aria-label="Default select example">
+                                                                        <option <?= $product['premium'] == "1" ? "selected" : "" ?>>premium</option>
+                                                                        <option <?= $product['premium'] == "0" ? "selected" : "" ?>>not premium</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="editorder" class="form-label">
+                                                                        <h6>Category</h6>
+                                                                    </label>
+                                                                    <input type="text" class="form-control" id="editorder" name="edittr" value="<?= $product['category'] ?>">
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="editorder" class="form-label">
+                                                                        <h6>Created user</h6>
+                                                                    </label>
+                                                                    <input type="text" class="form-control" id="editorder" name="edittr" value="<?= $product['user'] ?>">
                                                                 </div>
                                                             </div>
-                                                        </form>
-                                                    </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                <button type="submit" name="edit" class="btn btn-success">Change</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
                                                 </div>
+                                            </div>
                                             <?php //}
                                             ?>
 
