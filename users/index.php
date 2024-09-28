@@ -61,7 +61,8 @@
                     </div>
                     <ul class="header-user-links">
                         <li>
-                            <a href="login.html">Login or Register</a>
+                            <a href="login.php">Login </a>
+                            <a href="register.php"> Register</a>
                         </li>
                     </ul>
                 </div>
