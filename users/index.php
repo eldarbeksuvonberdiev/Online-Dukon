@@ -2,21 +2,21 @@
 session_start();
 $con = new PDO('mysql:host=localhost;dbname=onlinedukon', 'root', 'root');
 
-if(!$_SESSION['cart']){
-    $_SESSION['cart'] = [];
+if(!$_SESSION['carts']){
+    $_SESSION['carts'] = [];
 }
 $sql = "SELECT * FROM products ORDER BY id DESC";
 $result = $con->query($sql);
 $products = $result->fetchAll(PDO::FETCH_ASSOC);
 
 if(isset($_GET['product_id'])){
-    $id = $_GET['id'];
+    $id = $_GET['product_id'];
     $sql = "SELECT * FROM products WHERE id='{$id}'";
     $sttm = $con->query($sql);
     $product = $sttm->fetch(PDO::FETCH_ASSOC);
     if(isset($product)){
-        if(in_array($product,$_SESSION['cart'])){
-            $_SESSION['cart'][] = $product;
+        if(!in_array($product,$_SESSION['carts'])){
+            $_SESSION['carts'][] = $product;
         }
     }
 }
@@ -123,14 +123,14 @@ if(isset($_GET['product_id'])){
                                 <a href="cart.php" class="shopcart-icon">
                                     Cart
                                     <span class="count">
-                                        0
+                                        <?=count($_SESSION['carts'])?>
                                     </span>
                                 </a>
                                 <div class="no-product vereesa-submenu">
                                     <p class="text">
                                         You have
                                         <span>
-                                            0 item(s)
+                                             item(s)
                                         </span>
                                         in your bag
                                     </p>
