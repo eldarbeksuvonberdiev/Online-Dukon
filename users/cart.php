@@ -1,15 +1,14 @@
 <?php
 session_start();
-$con = new PDO('mysql:host=localhost;dbname=onlinedukon','root','root');
-if(isset($_GET['product_id'])){
+$con = new PDO('mysql:host=localhost;dbname=onlinedukon', 'root', 'root');
+if (isset($_GET['product_id'])) {
     $id = $_GET['product_id'];
     $sql = "SELECT * FROM products WHERE id='{$id}'";
     $sttm = $con->query($sql);
     $product = $sttm->fetch(PDO::FETCH_ASSOC);
-    
-    $key = array_search($product,$_SESSION['carts']);
-    unset($_SESSION['carts'][$key]);
 
+    $key = array_search($product, $_SESSION['carts']);
+    unset($_SESSION['carts'][$key]);
 }
 
 ?>
@@ -77,7 +76,8 @@ if(isset($_GET['product_id'])){
                     </div>
                     <ul class="header-user-links">
                         <li>
-                            <a href="login.html">Login or Register</a>
+                            <a href="login.php">Login </a>
+                            <a href="register.php"> Register</a>
                         </li>
                     </ul>
                 </div>
@@ -118,7 +118,7 @@ if(isset($_GET['product_id'])){
                             </form>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-sm-12 col-md-3 col-xs-12 col-ts-12">
+                    <!-- <div class="col-lg-2 col-sm-12 col-md-3 col-xs-12 col-ts-12">
                         <div class="header-control">
                             <div class="block-account block-header vereesa-dropdown">
                                 <a href="javascript:void(0);" data-vereesa="vereesa-dropdown">
@@ -180,7 +180,7 @@ if(isset($_GET['product_id'])){
                                 <span></span>
                             </a>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -321,21 +321,21 @@ if(isset($_GET['product_id'])){
                                             foreach ($_SESSION['carts'] as $cart) { ?>
                                                 <tr class="cart_item">
                                                     <td class="product-remove">
-                                                        <a href="?product_id=<?=$cart['id']?>" class="remove"></a>
+                                                        <a href="?product_id=<?= $cart['id'] ?>" class="remove"></a>
                                                     </td>
                                                     <td class="product-thumbnail">
                                                         <a href="#">
-                                                            <img src="../admin/<?=$cart['img']?>" alt="img" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image">
+                                                            <img src="../admin/<?= $cart['img'] ?>" alt="img" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image">
                                                         </a>
                                                     </td>
                                                     <td class="product-name" data-title="Product">
-                                                        <a href="#" class="title"><?=$cart['name']?></a>
+                                                        <a href="#" class="title"><?= $cart['name'] ?></a>
                                                     </td>
                                                     <td class="product-quantity" data-title="Quantity">
                                                         <div class="quantity">
                                                             <div class="control">
                                                                 <a class="btn-number qtyminus quantity-minus" href="#">-</a>
-                                                                <input type="text" data-step="1" data-min="1" max="<?=$cart['count']?>" value="1" title="Qty" class="input-qty qty" size="4">
+                                                                <input type="text" data-step="1" data-min="1" max="<?= $cart['count'] ?>" value="1" title="Qty" class="input-qty qty" size="4">
                                                                 <a href="#" class="btn-number qtyplus quantity-plus">+</a>
                                                             </div>
                                                         </div>
@@ -345,7 +345,7 @@ if(isset($_GET['product_id'])){
                                                             <span class="woocommerce-Price-currencySymbol">
                                                                 So'm
                                                             </span>
-                                                            <?=$cart['price']?>
+                                                            <?= $cart['price'] ?>
                                                         </span>
                                                     </td>
                                                 </tr>
@@ -356,12 +356,14 @@ if(isset($_GET['product_id'])){
                                     </table>
                                 </form>
                                 <div class="control-cart">
-                                    <a href="index.php" class="button btn-continue-shopping">
-                                        CONTINUE SHOPPING
-                                    </a>
-                                    <a href="order.php" class="button btn-cart-to-checkout">
-                                        CHECK OUT
-                                    </a>
+                                    <form action="order.php" method="POST">
+                                        <a href="index.php" class="button btn-continue-shopping">
+                                            CONTINUE SHOPPING
+                                        </a>
+                                        <a name="checkout" href="order.php" class="button btn-cart-to-checkout">
+                                            CHECK OUT
+                                        </a>
+                                    </form>
                                 </div>
                             </div>
                         </div>
