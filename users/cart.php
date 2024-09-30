@@ -1,14 +1,25 @@
 <?php
 session_start();
+// session_destroy();
 $con = new PDO('mysql:host=localhost;dbname=onlinedukon', 'root', 'root');
 if (isset($_GET['product_id'])) {
     $id = $_GET['product_id'];
     $sql = "SELECT * FROM products WHERE id='{$id}'";
     $sttm = $con->query($sql);
     $product = $sttm->fetch(PDO::FETCH_ASSOC);
+    // $product = array('id' => $product['id'], 'name' => $product['name'], 'price' => $product['price'],'img' => $product['img'],'count'=>$product['count'],'user_id'=>$product['user_id'],'category_id'=>$product['category_id'],'quantity'=>$_GET['quant']);
 
     $key = array_search($product, $_SESSION['carts']);
     unset($_SESSION['carts'][$key]);
+}
+if(isset($_GET['quantity'])){
+    $key=$_GET['order'];
+    $quantity=$_GET['quantity'];
+    if ($quantity==0){
+        $_SESSION['carts'][$key]['quantity'] -= 1;
+    }elseif($quantity==1){
+        $_SESSION['carts'][$key]['quantity'] += 1;
+    }
 }
 ?>
 
@@ -319,7 +330,7 @@ if (isset($_GET['product_id'])) {
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                foreach ($_SESSION['carts'] as $cart) { ?>
+                                                foreach ($_SESSION['carts'] as $key => $cart) { ?>
                                                     <tr class="cart_item">
                                                         <td class="product-remove">
                                                             <a href="?product_id=<?= $cart['id'] ?>" class="remove"></a>
@@ -335,8 +346,10 @@ if (isset($_GET['product_id'])) {
                                                         <td class="product-quantity" data-title="Quantity">
                                                             <div class="quantity">
                                                                 <div class="control">
+                                                                    <input type="hidden" name="id" value="<?= $key ?>">
+                                                                    <input type="hidden" name="quant" value="<?= $cart['quantity'] ?>">
                                                                     <a class="btn-number qtyminus quantity-minus" href="?quantity=0">-</a>
-                                                                    <input type="text" name="quantity" data-step="1" data-min="1" max="<?= $cart['count'] ?>" value="1" title="Qty" class="input-qty qty" readonly>
+                                                                    <input type="text" name="quantity" data-step="1" data-min="1" max="<?= $cart['count'] ?>" value="<?= $cart['quantity'] ?>" title="Qty" class="input-qty qty" readonly>
                                                                     <a href="?quantity=1" class="btn-number qtyplus quantity-plus">+</a>
                                                                 </div>
                                                             </div>

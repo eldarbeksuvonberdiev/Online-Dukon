@@ -14,7 +14,7 @@ if(isset($_GET['product_id'])){
     $sql = "SELECT * FROM products WHERE id='{$id}'";
     $sttm = $con->query($sql);
     $product = $sttm->fetch(PDO::FETCH_ASSOC);
-    $product = array('id' => $product['id'], 'name' => $product['name'], 'price' => $product['price'], 'image' => $product['image'],'count' => 1,);
+    // $product = array('id' => $product['id'], 'name' => $product['name'], 'price' => $product['price'],'img' => $product['img'],'count'=>$product['count'],'user_id'=>$product['user_id'],'category_id'=>$product['category_id'],'quantity'=>'1');
     if(isset($product)){
         if(!in_array($product,$_SESSION['carts'])){
             $_SESSION['carts'][] = $product;

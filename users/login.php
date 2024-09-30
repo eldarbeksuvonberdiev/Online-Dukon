@@ -143,7 +143,7 @@
                         <div class="container-wapper">
                             <ul class="vereesa-clone-mobile-menu vereesa-nav main-menu " id="menu-main-menu">
                                 <li class="menu-item">
-                                    <a href="about.html" class="vereesa-menu-item-title" title="About">About</a>
+                                    <a href="login.php" class="vereesa-menu-item-title" title="About">About</a>
                                 </li>
                             </ul>
                         </div>
