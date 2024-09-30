@@ -10,7 +10,6 @@ if (isset($_GET['product_id'])) {
     $key = array_search($product, $_SESSION['carts']);
     unset($_SESSION['carts'][$key]);
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -304,7 +303,7 @@ if (isset($_GET['product_id'])) {
                         </h3>
                         <div class="page-main-content">
                             <div class="shoppingcart-content">
-                                <form action="shoppingcart.html" class="cart-form">
+                                <form action="order.php" method="POST" class="cart-form">
                                     <table class="shop_table">
                                         <thead>
                                             <tr>
@@ -334,9 +333,9 @@ if (isset($_GET['product_id'])) {
                                                     <td class="product-quantity" data-title="Quantity">
                                                         <div class="quantity">
                                                             <div class="control">
-                                                                <a class="btn-number qtyminus quantity-minus" href="#">-</a>
-                                                                <input type="text" data-step="1" data-min="1" max="<?= $cart['count'] ?>" value="1" title="Qty" class="input-qty qty" size="4">
-                                                                <a href="#" class="btn-number qtyplus quantity-plus">+</a>
+                                                                <a class="btn-number qtyminus quantity-minus" href="?quantity=0">-</a>
+                                                                <input type="text" name="quantity" data-step="1" data-min="1" max="<?= $cart['count'] ?>" value="1" title="Qty" class="input-qty qty" readonly>
+                                                                <a href="?quantity=1" class="btn-number qtyplus quantity-plus">+</a>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -354,17 +353,15 @@ if (isset($_GET['product_id'])) {
                                             ?>
                                         </tbody>
                                     </table>
-                                </form>
-                                <div class="control-cart">
-                                    <form action="order.php" method="POST">
+                                    <div class="control-cart">
                                         <a href="index.php" class="button btn-continue-shopping">
                                             CONTINUE SHOPPING
                                         </a>
-                                        <a name="checkout" href="order.php" class="button btn-cart-to-checkout">
+                                        <button type="submit" name="checkout" class="button btn-cart-to-checkout">
                                             CHECK OUT
-                                        </a>
-                                    </form>
-                                </div>
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
