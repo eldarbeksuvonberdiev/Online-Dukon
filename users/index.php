@@ -2,7 +2,7 @@
 session_start();
 $con = new PDO('mysql:host=localhost;dbname=onlinedukon', 'root', 'root');
 
-if(!$_SESSION['carts']){
+if(!isset($_SESSION['carts'])){
     $_SESSION['carts'] = [];
 }
 $sql = "SELECT * FROM products ORDER BY id DESC";
@@ -14,6 +14,7 @@ if(isset($_GET['product_id'])){
     $sql = "SELECT * FROM products WHERE id='{$id}'";
     $sttm = $con->query($sql);
     $product = $sttm->fetch(PDO::FETCH_ASSOC);
+    $product = array('id' => $product['id'], 'name' => $product['name'], 'price' => $product['price'], 'image' => $product['image'],'count' => 1,);
     if(isset($product)){
         if(!in_array($product,$_SESSION['carts'])){
             $_SESSION['carts'][] = $product;
@@ -85,10 +86,18 @@ if(isset($_GET['product_id'])){
                         </div>
                     </div>
                     <ul class="header-user-links">
-                        <li>
-                            <a href="login.php">Login </a>
-                            <a href="register.php"> Register</a>
-                        </li>
+                        <?php
+                            if(!isset($_SESSION['id'])){ ?>
+                                <li>
+                                    <a href="login.php">Login </a>
+                                    <a href="register.php"> Register</a>
+                                </li>
+                                <?php } else{ ?>
+                                    <li>
+                                        <a href="logout.php">Logout</a>
+                                    </li>   
+                        <?php }
+                        ?>
                     </ul>
                 </div>
             </div>
@@ -156,6 +165,15 @@ if(isset($_GET['product_id'])){
                 </div>
             </div>
         </div>
+                <?php
+            if(isset($_SESSION['error'])){ ?>
+                <div class="alert alert-<?=$_SESSION['error']?>" role="alert">
+                    <?=$_SESSION['msg']?>
+            </div>
+            <?php
+                unset($_SESSION['error']);    
+        }
+                ?>
     </header>
     <div class="header-device-mobile">
         <div class="wapper">

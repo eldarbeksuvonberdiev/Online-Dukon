@@ -13,7 +13,7 @@ if (isset($_POST['checkout'])) {
             $con->query($sql);    
         }
         unset($_SESSION['carts']);
-        // $_SESSION['carts'] = [];
+        $_SESSION['carts'] = [];
         header("location:index.php");
     }
 }

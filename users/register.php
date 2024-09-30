@@ -115,6 +115,18 @@
                                 <a href="javascript:void(0);" data-vereesa="vereesa-dropdown">
                                     <i class="fa fa-user-o" aria-hidden="true"></i>
                                 </a>
+                                <div class="header-account vereesa-submenu">
+                                    <div class="header-user-form-tabs">
+                                        <ul class="tab-link">
+                                            <li class="active">
+                                                <a aria-expanded="true" type="submit" href="../login.php">Login</a>
+                                            </li>
+                                            <li>
+                                                <a aria-expanded="true" type="submit" href="../registration.php">Register</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                             <a class="menu-bar mobile-navigation menu-toggle" href="#">
                                 <span></span>
@@ -141,6 +153,15 @@
                 </div>
             </div>
         </div>
+        <?php
+            if(isset($_SESSION['error'])){ ?>
+                <div class="alert alert-<?=$_SESSION['error']?>" role="alert">
+                    <?=$_SESSION['msg']?>
+            </div>
+            <?php
+                unset($_SESSION['error']);    
+        }
+                ?>
     </header>
     <div class="header-device-mobile">
         <div class="wapper">
@@ -248,27 +269,25 @@
                                     <div class="col-lg-12 col-md-6 col-sm-12">
                                         <div class="login-item">
                                             <h5 class="title-login">Don’t have an Account? Register now!</h5>
-                                            <form class="register">
+                                            <form class="register" action="createRegister.php" method="POST">
                                                 <p class="form-row form-row-wide">
-                                                    <label class="text">Your email</label>
-                                                    <input title="email" type="email" class="input-text">
+                                                    <label class="text">Name</label>
+                                                    <input title="text" type="text" name="name" class="input-text">
                                                 </p>
                                                 <p class="form-row form-row-wide">
-                                                    <label class="text">Username</label>
-                                                    <input title="name" type="text" class="input-text">
+                                                    <label class="text">Your email</label>
+                                                    <input title="email" type="email" name="email" class="input-text">
                                                 </p>
                                                 <p class="form-row form-row-wide">
                                                     <label class="text">Password</label>
-                                                    <input title="pass" type="password" class="input-text">
+                                                    <input title="pass" type="password" name="password" class="input-text">
                                                 </p>
-                                                <p class="form-row">
-                                                    <span class="inline">
-                                                        <input type="checkbox" id="cb2">
-                                                        <label for="cb2" class="label-text">I agree to <span>Terms & Conditions</span></label>
-                                                    </span>
+                                                <p class="form-row form-row-wide">
+                                                    <label class="text">Repaet Password</label>
+                                                    <input title="pass" type="password" name="repeatpassword" class="input-text">
                                                 </p>
                                                 <p class="">
-                                                    <input type="submit" class="button-submit" value="REGISTER NOW">
+                                                    <input type="submit"  name='register' class="button-submit" value="REGISTER NOW">
                                                 </p>
                                             </form>
                                         </div>
@@ -279,7 +298,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div><br><br>
         <footer class="footer style7">
             <div class="container">
                 <div class="container-wapper">

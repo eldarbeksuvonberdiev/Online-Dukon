@@ -85,9 +85,6 @@
                                     <div class="inner">
                                         <input type="text" class="input" name="s" value="" placeholder="Search here">
                                     </div>
-                                    <button class="btn-search" type="submit">
-                                        <span class="icon-search"></span>
-                                    </button>
                                 </div>
                             </form>
                         </div>
@@ -110,58 +107,22 @@
                                         in your bag
                                     </p>
                                 </div>
-                            </div>
+                            </div><br>
                             <div class="block-account block-header vereesa-dropdown">
-                                <a href="javascript:void(0);" data-vereesa="vereesa-dropdown">
+                                <label for="adminPanel">To control panel</label>
+                                <a id="adminPanel" href="javascript:void(0);" data-vereesa="vereesa-dropdown">
                                     <i class="fa fa-user-o" aria-hidden="true"></i>
                                 </a>
                                 <div class="header-account vereesa-submenu">
                                     <div class="header-user-form-tabs">
                                         <ul class="tab-link">
                                             <li class="active">
-                                                <a data-toggle="tab" aria-expanded="true" href="#header-tab-login">Login</a>
+                                                <a aria-expanded="true" type="submit" href="../login.php">Login</a>
                                             </li>
                                             <li>
-                                                <a data-toggle="tab" aria-expanded="true" href="#header-tab-rigister">Register</a>
+                                                <a aria-expanded="true" type="submit" href="../registration.php">Register</a>
                                             </li>
                                         </ul>
-                                        <div class="tab-container">
-                                            <div id="header-tab-login" class="tab-panel active">
-                                                <form method="post" class="login form-login">
-                                                    <p class="form-row form-row-wide">
-                                                        <input type="email" placeholder="Email" class="input-text">
-                                                    </p>
-                                                    <p class="form-row form-row-wide">
-                                                        <input type="password" class="input-text" placeholder="Password">
-                                                    </p>
-                                                    <p class="form-row">
-                                                        <label class="form-checkbox">
-                                                            <input type="checkbox" class="input-checkbox">
-                                                            <span>
-                                                                Remember me
-                                                            </span>
-                                                        </label>
-                                                        <input type="submit" class="button" value="Login">
-                                                    </p>
-                                                    <p class="lost_password">
-                                                        <a href="#">Lost your password?</a>
-                                                    </p>
-                                                </form>
-                                            </div>
-                                            <div id="header-tab-rigister" class="tab-panel">
-                                                <form method="post" class="register form-register">
-                                                    <p class="form-row form-row-wide">
-                                                        <input type="email" placeholder="Email" class="input-text">
-                                                    </p>
-                                                    <p class="form-row form-row-wide">
-                                                        <input type="password" class="input-text" placeholder="Password">
-                                                    </p>
-                                                    <p class="form-row">
-                                                        <input type="submit" class="button" value="Register">
-                                                    </p>
-                                                </form>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -190,6 +151,15 @@
                 </div>
             </div>
         </div>
+        <?php
+            if(isset($_SESSION['error'])){ ?>
+                <div class="alert alert-<?=$_SESSION['error']?>" role="alert">
+                    A simple primary alert—check it out!
+                </div>
+            <?php
+                unset($_SESSION['error']);    
+        }
+                ?>
     </header>
     <div class="header-device-mobile">
         <div class="wapper">
@@ -296,23 +266,17 @@
                                 <div class="col-lg-12 col-md-6 col-sm-12">
                                     <div class="login-item">
                                         <h5 class="title-login">Login your Account</h5>
-                                        <form class="login">
+                                        <form action="checkLogin.php" method="POST" class="login">
                                             <p class="form-row form-row-wide">
-                                                <label class="text">Username</label>
-                                                <input title="username" type="text" class="input-text">
+                                                <label class="text">Email</label>
+                                                <input title="username" name="email" type="email" class="input-text">
                                             </p>
                                             <p class="form-row form-row-wide">
                                                 <label class="text">Password</label>
-                                                <input title="password" type="password" class="input-text">
-                                            </p>
-                                            <p class="lost_password">
-                                                <span class="inline">
-                                                    <input type="checkbox" id="cb1">
-                                                    <label for="cb1" class="label-text">Remember me</label>
-                                                </span>
+                                                <input title="password" name="password" type="password" class="input-text">
                                             </p>
                                             <p class="form-row">
-                                                <input type="submit" class="button-submit" value="login">
+                                                <input type="submit" name="login" class="button-submit" value="login">
                                             </p>
                                         </form>
                                     </div>

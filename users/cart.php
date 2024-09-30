@@ -301,69 +301,79 @@ if (isset($_GET['product_id'])) {
                         <h3 class="custom_blog_title">
                             Shopping Cart
                         </h3>
-                        <div class="page-main-content">
-                            <div class="shoppingcart-content">
-                                <form action="order.php" method="POST" class="cart-form">
-                                    <table class="shop_table">
-                                        <thead>
-                                            <tr>
-                                                <th class="product-remove"></th>
-                                                <th class="product-thumbnail"></th>
-                                                <th class="product-name"></th>
-                                                <th class="product-price"></th>
-                                                <th class="product-quantity"></th>
-                                                <th class="product-subtotal"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            foreach ($_SESSION['carts'] as $cart) { ?>
-                                                <tr class="cart_item">
-                                                    <td class="product-remove">
-                                                        <a href="?product_id=<?= $cart['id'] ?>" class="remove"></a>
-                                                    </td>
-                                                    <td class="product-thumbnail">
-                                                        <a href="#">
-                                                            <img src="../admin/<?= $cart['img'] ?>" alt="img" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image">
-                                                        </a>
-                                                    </td>
-                                                    <td class="product-name" data-title="Product">
-                                                        <a href="#" class="title"><?= $cart['name'] ?></a>
-                                                    </td>
-                                                    <td class="product-quantity" data-title="Quantity">
-                                                        <div class="quantity">
-                                                            <div class="control">
-                                                                <a class="btn-number qtyminus quantity-minus" href="?quantity=0">-</a>
-                                                                <input type="text" name="quantity" data-step="1" data-min="1" max="<?= $cart['count'] ?>" value="1" title="Qty" class="input-qty qty" readonly>
-                                                                <a href="?quantity=1" class="btn-number qtyplus quantity-plus">+</a>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="product-price" data-title="Price">
-                                                        <span class="woocommerce-Price-amount amount">
-                                                            <span class="woocommerce-Price-currencySymbol">
-                                                                So'm
-                                                            </span>
-                                                            <?= $cart['price'] ?>
-                                                        </span>
-                                                    </td>
+                        <?php
+                        if (!empty($_SESSION['carts'])) { ?>
+                            <div class="page-main-content">
+                                <div class="shoppingcart-content">
+                                    <form action="order.php" method="POST" class="cart-form">
+                                        <table class="shop_table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="product-remove"></th>
+                                                    <th class="product-thumbnail"></th>
+                                                    <th class="product-name"></th>
+                                                    <th class="product-price"></th>
+                                                    <th class="product-quantity"></th>
+                                                    <th class="product-subtotal"></th>
                                                 </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                foreach ($_SESSION['carts'] as $cart) { ?>
+                                                    <tr class="cart_item">
+                                                        <td class="product-remove">
+                                                            <a href="?product_id=<?= $cart['id'] ?>" class="remove"></a>
+                                                        </td>
+                                                        <td class="product-thumbnail">
+                                                            <a href="#">
+                                                                <img src="../admin/<?= $cart['img'] ?>" alt="img" class="attachment-shop_thumbnail size-shop_thumbnail wp-post-image">
+                                                            </a>
+                                                        </td>
+                                                        <td class="product-name" data-title="Product">
+                                                            <a href="#" class="title"><?= $cart['name'] ?></a>
+                                                        </td>
+                                                        <td class="product-quantity" data-title="Quantity">
+                                                            <div class="quantity">
+                                                                <div class="control">
+                                                                    <a class="btn-number qtyminus quantity-minus" href="?quantity=0">-</a>
+                                                                    <input type="text" name="quantity" data-step="1" data-min="1" max="<?= $cart['count'] ?>" value="1" title="Qty" class="input-qty qty" readonly>
+                                                                    <a href="?quantity=1" class="btn-number qtyplus quantity-plus">+</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td class="product-price" data-title="Price">
+                                                            <span class="woocommerce-Price-amount amount">
+                                                                <span class="woocommerce-Price-currencySymbol">
+                                                                    So'm
+                                                                </span>
+                                                                <?= $cart['price'] ?>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
 
-                                            <?php }
-                                            ?>
-                                        </tbody>
-                                    </table>
-                                    <div class="control-cart">
-                                        <a href="index.php" class="button btn-continue-shopping">
-                                            CONTINUE SHOPPING
-                                        </a>
-                                        <button type="submit" name="checkout" class="button btn-cart-to-checkout">
-                                            CHECK OUT
-                                        </button>
-                                    </div>
-                                </form>
+                                                <?php }
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                        <div class="control-cart">
+                                            <a href="index.php" class="button btn-continue-shopping">
+                                                CONTINUE SHOPPING
+                                            </a>
+                                            <button type="submit" name="checkout" class="button btn-cart-to-checkout">
+                                                CHECK OUT
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
-                        </div>
+
+                        <?php } else{
+                            echo '<div class="page-main-content">
+                            <div class="shoppingcart-content">
+                                <div class="alert alert-danger">
+                                    <strong>Cart is empty</strong>';
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
