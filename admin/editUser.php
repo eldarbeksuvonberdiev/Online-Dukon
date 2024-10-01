@@ -11,7 +11,7 @@ if(isset($_POST['edit']) && !empty($_POST['name']) && !empty($_POST['email']) &&
     $newpassword = md5($newpassword);
 
     
-    if(!($password === $_POST['newpassword'])){
+    if($password === $_POST['newpassword']){
         $sql = "UPDATE users SET name='{$name}', email='{$email}', role='{$role}' WHERE id='{$_POST['id']}'";
     }else{
         $sql = "UPDATE users SET name='{$name}', email='{$email}', role='{$role}', password='{$newpassword}' WHERE id='{$_POST['id']}'";

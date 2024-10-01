@@ -19,7 +19,7 @@ if (isset($_POST['ok']) && !empty($_POST['email']) && !empty($_POST['password'])
         if ($_SESSION['role'] == 'admin') {
             header("location:admin/index.php");
         } else {
-            header("location:admin/index.php");
+            header("location:admin/adminProducts.php");
         }
     } else {
         $_SESSION['error'] = "Email yoki parol xato";
