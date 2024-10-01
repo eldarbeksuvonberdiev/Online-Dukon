@@ -172,6 +172,7 @@ if(isset($_GET['product_id'])){
             </div>
             <?php
                 unset($_SESSION['error']);    
+                unset($_SESSION['msg']);    
         }
                 ?>
     </header>

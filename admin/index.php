@@ -70,26 +70,38 @@ $categories = $result->fetchAll(PDO::FETCH_ASSOC);
             </div>
 
             <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="index.php">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Category</span></a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="products.php">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>All Products</span></a>
-            </li>
+            <?php
+            if ($_SESSION['role'] == 'admin') { ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>Category</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="users.php">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>Users</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="products.php">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>All Products</span></a>
+                </li>
+            <?php } ?>
             <li class="nav-item">
                 <a class="nav-link" href="adminProducts.php">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>My Products</span></a>
+                    <span>Products</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="users.php">
+                <a class="nav-link" href="myOrders.php">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Users</span></a>
+                    <span>My Orders</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="orders.php">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Orders</span></a>
             </li>
         </ul>
         <!-- End of Sidebar -->

@@ -30,7 +30,4 @@ if (isset($_POST['register'])) {
             }
         }
     }
-} else {
-    $_SESSION['error'] = "danger";
-    header("location:registration.php");
 }

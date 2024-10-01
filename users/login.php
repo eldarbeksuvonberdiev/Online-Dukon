@@ -109,7 +109,6 @@
                                 </div>
                             </div><br>
                             <div class="block-account block-header vereesa-dropdown">
-                                <label for="adminPanel">To control panel</label>
                                 <a id="adminPanel" href="javascript:void(0);" data-vereesa="vereesa-dropdown">
                                     <i class="fa fa-user-o" aria-hidden="true"></i>
                                 </a>
@@ -126,11 +125,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <a class="menu-bar mobile-navigation menu-toggle" href="#">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </a>
                         </div>
                     </div>
                 </div>
@@ -154,10 +148,11 @@
         <?php
             if(isset($_SESSION['error'])){ ?>
                 <div class="alert alert-<?=$_SESSION['error']?>" role="alert">
-                    A simple primary alert—check it out!
+                    <?=$_SESSION['msg']?>
                 </div>
             <?php
                 unset($_SESSION['error']);    
+                unset($_SESSION['msg']);    
         }
                 ?>
     </header>

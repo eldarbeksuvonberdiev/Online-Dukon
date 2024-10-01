@@ -12,15 +12,15 @@ if (isset($_GET['product_id'])) {
     $key = array_search($product, $_SESSION['carts']);
     unset($_SESSION['carts'][$key]);
 }
-if(isset($_GET['quantity'])){
-    $key=$_GET['order'];
-    $quantity=$_GET['quantity'];
-    if ($quantity==0){
-        $_SESSION['carts'][$key]['quantity'] -= 1;
-    }elseif($quantity==1){
-        $_SESSION['carts'][$key]['quantity'] += 1;
-    }
-}
+// if(isset($_GET['quantity'])){
+//     $key=$_GET['order'];
+//     $quantity=$_GET['quantity'];
+//     if ($quantity==0){
+//         $_SESSION['carts'][$key]['quantity'] -= 1;
+//     }elseif($quantity==1){
+//         $_SESSION['carts'][$key]['quantity'] += 1;
+//     }
+// }
 ?>
 
 <!DOCTYPE html>
@@ -349,7 +349,7 @@ if(isset($_GET['quantity'])){
                                                                     <input type="hidden" name="id" value="<?= $key ?>">
                                                                     <input type="hidden" name="quant" value="<?= $cart['quantity'] ?>">
                                                                     <a class="btn-number qtyminus quantity-minus" href="?quantity=0">-</a>
-                                                                    <input type="text" name="quantity" data-step="1" data-min="1" max="<?= $cart['count'] ?>" value="<?= $cart['quantity'] ?>" title="Qty" class="input-qty qty" readonly>
+                                                                    <input type="text" name="quantity" data-step="1" data-min="1" max="<?= $cart['count'] ?>" title="Qty" class="input-qty qty" readonly>
                                                                     <a href="?quantity=1" class="btn-number qtyplus quantity-plus">+</a>
                                                                 </div>
                                                             </div>
