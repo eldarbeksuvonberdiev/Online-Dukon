@@ -152,7 +152,7 @@ $products = $result->fetchAll(PDO::FETCH_ASSOC);
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <div class="d-sm-flex align-items-center justify-content-between">
-                        <h1 class="h3 mb-0 text-gray-800">Admin Products</h1>
+                        <h1 class="h3 mb-0 text-gray-800">My Products</h1>
                     </div>
                     <hr>
                 </div>

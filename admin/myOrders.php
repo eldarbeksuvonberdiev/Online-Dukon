@@ -8,7 +8,7 @@ if (empty($_SESSION['id'])) {
 $limit = 7;
 
 
-$sql = "SELECT COUNT(*) as count FROM users";
+$sql = "SELECT COUNT(*) as count FROM orders WHERE client_id='{$_SESSION['id']}'";
 $rawCount = $con->query($sql)->fetch(PDO::FETCH_ASSOC);
 $countPages = ceil($rawCount['count'] / $limit);
 
@@ -20,9 +20,9 @@ if (isset($_GET['page'])) {
     $page = 1;
 }
 
-$sql = "SELECT * FROM users ORDER BY id DESC LIMIT {$pn},{$limit}";
+$sql = "SELECT orders.*,users.name AS name,products.name AS product FROM orders LEFT JOIN users ON orders.client_id=users.id LEFT JOIN products ON orders.product_id=products.id WHERE client_id='{$_SESSION['id']}' ORDER BY id DESC LIMIT {$pn},{$limit}";
 $result = $con->query($sql);
-$users = $result->fetchAll(PDO::FETCH_ASSOC);
+$orders = $result->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 <!DOCTYPE html>
@@ -35,7 +35,7 @@ $users = $result->fetchAll(PDO::FETCH_ASSOC);
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Admin Users control</title>
+    <title>Admin Orders control</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- Custom fonts for this template-->
@@ -147,7 +147,7 @@ $users = $result->fetchAll(PDO::FETCH_ASSOC);
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <div class="d-sm-flex align-items-center justify-content-between">
-                        <h1 class="h3 mb-0 text-gray-800">Users</h1>
+                        <h1 class="h3 mb-0 text-gray-800">My Orders</h1>
                     </div>
                     <hr>
                 </div>
@@ -165,200 +165,40 @@ $users = $result->fetchAll(PDO::FETCH_ASSOC);
                         } ?>
                     </div>
                 </div>
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-success ml-4" data-bs-toggle="modal" data-bs-target="#CreateModal">
-                    Add User
-                </button>
-
-                <!-- Modal -->
-                <div class="modal fade" id="CreateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <form action="createUser.php" method="POST" enctype="multipart/form-data">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="exampleModalLabel">User creation</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <label class="form-label">
-                                        <h6>Name</h6>
-                                    </label>
-                                    <input type="text" class="form-control" name="name" placeholder="User name">
-                                    <label for="corder" class="form-label mt-3">
-                                        <h6>Email</h6>
-                                    </label>
-                                    <input type="email" class="form-control" name="email" placeholder="User email">
-                                    <label for="corder" class="form-label mt-3">
-                                        <h6>Password</h6>
-                                    </label>
-                                    <input type="text" class="form-control" name="password" placeholder="User password">
-                                    <label for="cstatus" class="form-label mt-3">
-                                        <h6>Status</h6>
-                                    </label>
-                                    <select class="form-select" name="role" aria-label="Default select example">
-                                        <option value="admin">Admin</option>
-                                        <option value="user">User</option>
-                                    </select>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button name="add" type="submit" class="btn btn-success">Save</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
                 <div class="container">
                     <div class="row">
                         <table class="table table-secondary table-striped table-bordered mt-3" id="dataTable" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Role</th>
-                                    <th>Update/Delete</th>
+                                    <th>Name of user</th>
+                                    <th>Product name</th>
+                                    <th>Count</th>
+                                    <th>Accept/Reject</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                foreach ($users as $user) { ?>
+                                foreach ($orders as $order) { ?>
                                     <tr>
-                                        <td><?= $user['id'] ?></td>
-                                        <td><?= $user['name'] ?></td>
-                                        <td><?= $user['email'] ?></td>
-                                        <td><?= $user['role'] ?></td>
-                                        <td>
-                                            <!-- Button view trigger modal -->
-                                            <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#viewModal<?= $user['id'] ?>">
-                                                <i class="bi bi-eye"></i>
-                                            </button>
-
-                                            <!-- View Modal -->
-                                            <div class="modal fade" id="viewModal<?= $user['id'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <form action="editCategory.php" method="POST">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h1 class="modal-title fs-5" id="staticBackdropLabel" style="font-weight:700">View information</h1>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <div class="mb-3">
-                                                                    <label for="editname" class="form-label">
-                                                                        <h4>Nomi : </h4>
-                                                                    </label>
-                                                                    <label for="editname" class="form-label">
-                                                                        <h5 style="font-weight:700"><?= $user['name'] ?></h5>
-                                                                    </label>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="editname" class="form-label">
-                                                                        <h4>Order : </h4>
-                                                                    </label>
-                                                                    <label for="editname" class="form-label">
-                                                                        <h5 style="font-weight:700"><?= $user['email'] ?></h5>
-                                                                    </label>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="editname" class="form-label">
-                                                                        <h4>Status : </h4>
-                                                                    </label>
-                                                                    <label for="editname" class="form-label">
-                                                                        <h5 style="font-weight:700"><?= $user['role'] ?></h5>
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-
-                                            <!--Button edit trigger Modal -->
-                                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editModal<?= $user['id'] ?>">
-                                                <i class="bi bi-pencil-fill"></i>
-                                            </button>
-
-                                            <!-- Edit Modal -->
-                                            <div class="modal fade" id="editModal<?= $user['id'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <form action="editUser.php" method="POST">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h1 class="modal-title fs-5" id="staticBackdropLabel" style="font-weight: 700;">Edit</h1>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <div class="mb-3">
-                                                                    <input type="hidden" name="id" value="<?= $user['id'] ?>">
-                                                                    <label for="editname" class="form-label">
-                                                                        <h6>Name</h6>
-                                                                    </label>
-                                                                    <input type="text" class="form-control" id="name" name="name" value="<?= $user['name'] ?>">
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="editorder" class="form-label">
-                                                                        <h6>Email</h6>
-                                                                    </label>
-                                                                    <input type="email" class="form-control" id="order" name="email" value="<?= $user['email'] ?>">
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="editorder" class="form-label">
-                                                                        <h6>Role</h6>
-                                                                    </label>
-                                                                    <select class="form-select" name="role" aria-label="Default select example">
-                                                                        <option <?= $user['role'] == 'admin' ? 'selected' : '' ?> value="admin">Admin</option>
-                                                                        <option <?= $user['role'] == 'user' ? 'selected' : '' ?> value="user">User</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="editorder" class="form-label">
-                                                                        <input type="hidden" name="id" value="<?= $user['id'] ?>">
-                                                                        <input type="hidden" name="password" value="<?= $user['password'] ?>">
-                                                                        <h6>Password</h6>
-                                                                    </label>
-                                                                    <input type="text" class="form-control" id="newpassword" name="newpassword" placeholder="User password">
-                                                                </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                <button type="submit" name="edit" class="btn btn-success">Change</button>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            <!-- Button delete trigger modal -->
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $user['id'] ?>">
-                                                <i class="bi bi-trash-fill"></i>
-                                            </button>
-
-                                            <!--Delete Modal -->
-                                            <div class="modal fade" id="deleteModal<?= $user['id'] ?>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <form action="deleteUser.php" method="POST">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h1 class="modal-title fs-5" id="staticBackdropLabel" style="font-weight: 700;">Delete</h1>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <input type="hidden" name="id" value="<?= $user['id'] ?>">
-                                                                <h4><?= $user['name'] ?> user o'chirilsinmi?</h4>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                <button type="submit" name="delete" class="btn btn-success">Delete</button>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </td>
+                                        <td><?= $order['id'] ?></td>
+                                        <td><?= $order['name'] ?></td>
+                                        <td><?= $order['product'] ?></td>
+                                        <td><?= $order['count'] ?></td>
+                                        <?php if ($order['status'] == 1) { ?>
+                                            <td>
+                                                <input type="button" value="Waiting" class="btn btn-light" disabled>
+                                            </td>
+                                        <?php } elseif ($order['status'] == 0) { ?>
+                                            <td>
+                                                <input type="button" value="Rejected" class="btn btn-danger" disabled>
+                                            </td>
+                                        <?php } elseif ($order['status'] == 2) { ?>
+                                            <td>
+                                                <input type="button" value="Accepted" class="btn btn-success" disabled>
+                                            </td>
                                     <?php }
+                                    }
                                     ?>
                                     </tr>
                             </tbody>
